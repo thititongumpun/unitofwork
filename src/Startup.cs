@@ -1,12 +1,16 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using src.Infrastructure.Extensions;
+using src.Persistence;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +32,17 @@ namespace src
         {
 
             services.AddControllers();
+
+            if (Configuration.GetValue<bool>("UseInMemoryDatabase"))
+            {
+                services.AddDbContext<AppDbContext>(options =>
+                    options.UseInMemoryDatabase("InMemoryDb"));
+            }
+
+            services.AddAutoMapper(this.GetType().Assembly);
+
+            services.AddInfrastructure(Configuration);
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "src", Version = "v1" });
@@ -44,7 +59,7 @@ namespace src
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "src v1"));
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
