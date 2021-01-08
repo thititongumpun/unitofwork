@@ -33,7 +33,7 @@ namespace UnitTests.Services.AuthenticationTests
 
             _userRepository = new Mock<IUserRepository>();
             _userRepository.Setup(r => r.FindByUsernameAsync("ThisIsUserForTest"))
-                .ReturnsAsync(new User { Id = Guid.NewGuid(), UserName = "ThisIsUserForTest", UserRoles = new Collection<UserRole>() });
+                .ReturnsAsync(new User { Id = Guid.NewGuid(), Username = "ThisIsUserForTest", UserRoles = new Collection<UserRole>() });
 
             _userRepository.Setup(r => r.FindByUsernameAsync("ThisIsSecondUserForTest"))
                 .Returns(Task.FromResult<User>(null));
@@ -47,20 +47,20 @@ namespace UnitTests.Services.AuthenticationTests
         [Fact]
         public async Task Should_Create_Non_Existing_User()
         {
-            var user = new User { UserName = "testUser", Password = "123", UserRoles = new Collection<UserRole>() };
+            var user = new User { Username = "testUser", Password = "123", UserRoles = new Collection<UserRole>() };
             
             var response = await _userService.CreateUserAsync(user, ApplicationRole.User);
 
             Assert.NotNull(response);
             Assert.True(response.Success);
-            Assert.Equal(user.UserName, response.User.UserName);
+            Assert.Equal(user.Username, response.User.Username);
             Assert.Equal(user.Password, response.User.Password);
         }
 
         [Fact]
         public async Task Should_Not_Create_User_When_User_Is_Alreary_In_Use()
         {
-            var user = new User { UserName = "ThisIsUserForTest", Password = "123", UserRoles = new Collection<UserRole>() };
+            var user = new User { Username = "ThisIsUserForTest", Password = "123", UserRoles = new Collection<UserRole>() };
         
             var response = await _userService.CreateUserAsync(user, ApplicationRole.User);
 
@@ -73,7 +73,7 @@ namespace UnitTests.Services.AuthenticationTests
         {
             var user = await _userService.FindByUsernameAsync("ThisIsUserForTest");
             Assert.NotNull(user);
-            Assert.Equal("ThisIsUserForTest", user.UserName);
+            Assert.Equal("ThisIsUserForTest", user.Username);
         }
 
         [Fact]

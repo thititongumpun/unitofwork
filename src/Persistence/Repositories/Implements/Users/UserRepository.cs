@@ -31,7 +31,7 @@ namespace src.Persistence.Repositories.Users.Implements
         {
             return await _context.Users.Include(u => u.UserRoles)
                                         .ThenInclude(ur => ur.Role)
-                                        .SingleOrDefaultAsync(u => u.UserName == username);
+                                        .SingleOrDefaultAsync(u => u.Username == username);
         }
     }
 }

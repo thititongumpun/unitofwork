@@ -27,8 +27,8 @@ namespace src.Persistence.Services
             {
                 var users = new List<User>
                 {
-                    new User { UserName = "user", Password = passwordHasher.HashPassword("1234") },
-                    new User { UserName = "admin", Password = passwordHasher.HashPassword("1234") },
+                    new User { Username = "user", Password = passwordHasher.HashPassword("1234") },
+                    new User { Username = "admin", Password = passwordHasher.HashPassword("1234") },
                 };
 
                 users[0].UserRoles.Add(new UserRole

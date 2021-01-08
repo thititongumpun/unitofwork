@@ -24,7 +24,7 @@ namespace src.Persistence.Services.Implements.Users
 
         public async Task<UserResponse> CreateUserAsync(User user, params ApplicationRole[] userRoles)
         {
-            var existingUser = await _userRepo.FindByUsernameAsync(user.UserName);
+            var existingUser = await _userRepo.FindByUsernameAsync(user.Username);
             if (existingUser != null)
             {
                 return new UserResponse(false, "Username already existed", null);

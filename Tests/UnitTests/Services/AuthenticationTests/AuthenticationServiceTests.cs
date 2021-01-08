@@ -37,7 +37,7 @@ namespace UnitTests.Services.AuthenticationTests
                         .ReturnsAsync(new User
                         {
                             Id = Guid.NewGuid(),
-                            UserName = "MockTestUser",
+                            Username = "MockTestUser",
                             Password = "123",
                             UserRoles = new Collection<UserRole>
                             {

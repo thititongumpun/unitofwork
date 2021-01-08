@@ -45,7 +45,7 @@ namespace UnitTests.Services.Token
             _user = new User
             {
                 Id = Guid.NewGuid(),
-                UserName = "usertest1",
+                Username = "usertest1",
                 Password = "123",
                 UserRoles = new Collection<UserRole>
                 {
