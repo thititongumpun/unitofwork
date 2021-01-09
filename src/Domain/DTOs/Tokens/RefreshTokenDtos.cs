@@ -9,6 +9,6 @@ namespace src.Domain.DTOs.Tokens
 
         [Required]
         [StringLength(25)]
-        public string UserName { get; set; }
+        public string Username { get; set; }
     }
 }

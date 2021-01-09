@@ -34,7 +34,7 @@ namespace src.Controllers
                 return BadRequest(ModelState);
             }
 
-            var response = await _authenticationService.CreateAccessTokenAsync(userCredentials.UserName, userCredentials.Password);
+            var response = await _authenticationService.CreateAccessTokenAsync(userCredentials.Username, userCredentials.Password);
             if(!response.Success)
             {
                 return BadRequest(response.Message);
@@ -88,14 +88,14 @@ namespace src.Controllers
 
         [Route("/api/token/refresh")]
         [HttpPost]
-        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenDtos refreshTokenResource)
+        public async Task<IActionResult> RefreshTokenAsync([FromBody] RefreshTokenDtos refreshToken)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var response = await _authenticationService.RefreshTokenAsync(refreshTokenResource.Token, refreshTokenResource.UserName);
+            var response = await _authenticationService.RefreshTokenAsync(refreshToken.Token, refreshToken.Username);
             if(!response.Success)
             {
                 return BadRequest(response.Message);
@@ -107,14 +107,14 @@ namespace src.Controllers
 
         [Route("/api/token/revoke")]
         [HttpPost]
-        public IActionResult RevokeToken([FromBody] RevokeTokenDtos revokeTokenResource)
+        public IActionResult RevokeToken([FromBody] RevokeTokenDtos revokeToken)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            _authenticationService.RevokeRefreshToken(revokeTokenResource.Token);
+            _authenticationService.RevokeRefreshToken(revokeToken.Token);
             return NoContent();
         }
     }
